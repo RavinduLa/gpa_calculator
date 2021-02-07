@@ -5,6 +5,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gpa_calc/RouteGenerator.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Welcome to Flutter',
-      home: Scaffold(
+      //{(RouteSettings) -> Route<dynamic> onGenerateRoute}
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
+
+    );
+      //{
+
+      //},
+      /*home: Scaffold(
         appBar: AppBar(
           title: Text('GPA Calculator'),
         ),
@@ -21,7 +30,7 @@ class MyApp extends StatelessWidget {
           child: HomePage(),
         ),
       ),
-    );
+    );*/
 
 
   }
@@ -38,23 +47,89 @@ class _HomePage extends State
 {
   @override
   Widget build(BuildContext context) {
-      return Container(
 
-        padding: EdgeInsets.all(12),
-        child: YearView(),
-      );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("GPA Calculator"),
+      ),
+      body: Center(
+        child: Container(
+            padding: EdgeInsets.all(20),
+            //child: YearView(),
+            child: new Column(
+            children: [GPAview(), YearView()],
+        ),
+      ),
+    ),
+    );
+
+      /*return Container(
+        padding: EdgeInsets.all(20),
+        //child: YearView(),
+        child: new Column(
+          children: [GPAview(), YearView()],
+        ),
+      );*/
   }
 
 }
+
+class GPAview extends StatefulWidget
+{
+  _GPAview createState() => _GPAview();
+}
+
+class _GPAview extends State
+{
+  Widget build(BuildContext context)
+  {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.all(30.0),
+        child: Text("Current CGPA: 3.78",style: TextStyle(fontSize: 30),),
+      ),
+
+    );
+  }
+}
+
+/*class YearOnePage extends StatefulWidget
+{
+  final String data;
+  YearOnePage({Key key,@required this.data}): super(key: key);
+  //_YearOnePage createState()=> _YearOnePage();
+
+  @override
+  State<StatefulWidget> createState() {
+    return _YearOnePage(data);
+  }
+}
+class _YearOnePage extends State
+{
+  String datarec;
+
+  _YearOnePage(String data)
+  {
+    this.datarec = data;
+  }
+
+  Widget build(BuildContext context)
+  {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Year 1"),
+      ),
+      body: Center(
+        child: Text("Year 1 details"+datarec),
+      ),
+    );
+  }
+}*/
 
 class YearView extends StatefulWidget
 {
   @override
   _YearView createState() => _YearView();
-
-
-
-
 }
 
 class _YearView extends State
@@ -81,6 +156,8 @@ class _YearView extends State
                   /*Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text("Card Year 1 tapped"),
                   ));*/
+
+                  Navigator.of(context).pushNamed('/year1',arguments: "Data passed from home");
 
                   Fluttertoast.showToast(
                       msg: "Year 1",
