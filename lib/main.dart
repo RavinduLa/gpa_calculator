@@ -192,6 +192,9 @@ class _YearView extends State
                 splashColor: Colors.black.withAlpha(30),
                 onTap: () {
                   print('Card Year 2 tapped.');
+
+                  Navigator.of(context).pushNamed('/year2',arguments: "Data passed from home");
+
                   Fluttertoast.showToast(
                       msg: "Year 2",
                       toastLength: Toast.LENGTH_SHORT,
@@ -224,6 +227,7 @@ class _YearView extends State
                 splashColor: Colors.black.withAlpha(30),
                 onTap: () {
                   print('Card Year 3 tapped.');
+                  Navigator.of(context).pushNamed('/year3',arguments: "Data passed from home");
                   Fluttertoast.showToast(
                       msg: "Year 3",
                       toastLength: Toast.LENGTH_SHORT,
@@ -256,6 +260,7 @@ class _YearView extends State
                 splashColor: Colors.black.withAlpha(30),
                 onTap: () {
                   print('Card Year 4 tapped.');
+                  Navigator.of(context).pushNamed('/year4',arguments: "Data passed from home");
                   Fluttertoast.showToast(
                       msg: "Year 4",
                       toastLength: Toast.LENGTH_SHORT,

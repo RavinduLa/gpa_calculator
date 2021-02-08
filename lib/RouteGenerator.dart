@@ -17,6 +17,15 @@ class RouteGenerator
       case '/year1':
         return MaterialPageRoute(builder:(_) => YearOnePage(data: args,));
 
+      case '/year2':
+        return MaterialPageRoute(builder: (_) => YearTwoPage(data: args));
+
+      case '/year3':
+        return MaterialPageRoute(builder: (_) => YearThreePage(data: args));
+
+      case '/year4':
+        return MaterialPageRoute(builder: (_) => YearFourPage(data: args));
+
       default: _errorRoute();
     }
 
