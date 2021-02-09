@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gpa_calc/AddModule.dart';
+import 'package:gpa_calc/Semester.dart';
 import 'package:gpa_calc/main.dart';
 import 'package:gpa_calc/Years.dart';
 
@@ -26,6 +28,11 @@ class RouteGenerator
       case '/year4':
         return MaterialPageRoute(builder: (_) => YearFourPage(data: args));
 
+      case '/addNewModule':
+        return MaterialPageRoute(builder: (_) => AddModule());
+
+      case '/semesterView':
+        return MaterialPageRoute(builder: (_) => SemesterView() );
       default: _errorRoute();
     }
 

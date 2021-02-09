@@ -80,7 +80,16 @@ class _YearOnePage extends State
             Column(
               children: [
                 Semester(1),
-                Semester(2)
+                Semester(2),
+                RaisedButton(
+                    onPressed: ()
+                  {
+                    Navigator.of(context).pushNamed('/addNewModule',arguments: "Data passed from home");
+                  },
+
+                  child: Text("Test: go to add module in year 1"),
+
+                )
               ],
             ),
 
@@ -154,7 +163,7 @@ class _Semester extends State
                 RaisedButton(
                     padding: EdgeInsets.all(10.0),
                     color: Colors.cyan,
-                    onPressed: () => print('Card Year 1 tapped.') ,
+                    onPressed: () => Navigator.of(context).pushNamed('/semesterView',arguments: "Data passed from home"),
 
                   child: Container(
                     //decoration: const BoxDecoration(color: Colors.red),
@@ -205,8 +214,8 @@ class _YearTwoPage extends State
   {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Year 1"),
-        backgroundColor: Colors.cyan,
+        title: Text("Year 2"),
+        backgroundColor: Colors.green,
       ),
       body: Center(
           child: Column(
@@ -294,8 +303,8 @@ class _YearThreePage extends State
   {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Year 1"),
-        backgroundColor: Colors.cyan,
+        title: Text("Year 3"),
+        backgroundColor: Colors.blue,
       ),
       body: Center(
           child: Column(
@@ -383,8 +392,8 @@ class _YearFourPage extends State
   {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Year 1"),
-        backgroundColor: Colors.cyan,
+        title: Text("Year 4"),
+        backgroundColor: Colors.red,
       ),
       body: Center(
           child: Column(
