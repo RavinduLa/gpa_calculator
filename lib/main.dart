@@ -6,10 +6,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gpa_calc/RouteGenerator.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  /*void createModuleTable() async
+  {
+    WidgetsFlutterBinding.ensureInitialized();
+    //Future<String> databasePath = getDatabasesPath();
+    final Future<Database> database = openDatabase(
+      join(await getDatabasesPath(), 'gpa_calc.db'),
+      onCreate: (db, version) {
+        // Run the CREATE TABLE statement on the database.
+        return db.execute(
+          "CREATE TABLE module(id INTEGER PRIMARY KEY,moduleId INTEGER, moduleName TEXT, credits INTEGER, grade TEXT)",
+        );
+      },
+      version: 1,
+    );
+  }*/
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +35,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
 
+
     );
+
+
       //{
 
       //},

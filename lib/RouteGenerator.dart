@@ -4,6 +4,7 @@ import 'package:gpa_calc/AddModule.dart';
 import 'package:gpa_calc/Semester.dart';
 import 'package:gpa_calc/main.dart';
 import 'package:gpa_calc/Years.dart';
+import 'package:gpa_calc/ModuleScreen.dart';
 
 class RouteGenerator
 {
@@ -33,6 +34,12 @@ class RouteGenerator
 
       case '/semesterView':
         return MaterialPageRoute(builder: (_) => SemesterView() );
+
+      case '/addModule':
+        return MaterialPageRoute(builder: (_) => AddModule());
+
+      case '/moduleScreen':
+        return MaterialPageRoute(builder: (_) => Module() );
       default: _errorRoute();
     }
 
