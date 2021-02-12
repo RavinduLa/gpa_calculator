@@ -7,16 +7,18 @@ import 'package:gpa_calc/Years.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class AddModule extends StatefulWidget
+class AddModuleForYearSem extends StatefulWidget
 {
+  final int year,semester;
+  AddModuleForYearSem(this.year,this.semester);
   @override
   State<StatefulWidget> createState() {
-    return _AddModule();
+    return _AddModuleForYearSem(year,semester);
   }
 
 }
 
-class _AddModule extends State
+class _AddModuleForYearSem extends State
 {
   String moduleCode;
   String moduleName;
@@ -25,6 +27,12 @@ class _AddModule extends State
   int year;
   int semester;
 
+  _AddModuleForYearSem(int y, int s)
+  {
+    this.year = y;
+    this.semester = s;
+  }
+
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -32,23 +40,23 @@ class _AddModule extends State
   {
     return Scaffold(
       //resizing is done since bottom overflow was present when keyboards appear
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: Text("Add new Module"),),
-      body: Center(
-        child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(20.0),
-          child: Form(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(title: Text("Add new Module"),),
+        body: Center(
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(20.0),
+            child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Text("Year:"+year.toString()),
+                  Text("Semester: "+semester.toString()),
                   _buildModuleCodeField(),
                   _buildModuleNameField(),
                   _buildCreditsField(),
                   _buildGradeField(),
-                  _buildYearField(),
-                  _buildSemesterField(),
                   SizedBox(height: 100,),
                   RaisedButton(
                       child: Text("Add",style: TextStyle(color: Colors.blue, fontSize: 16),),
@@ -70,9 +78,9 @@ class _AddModule extends State
                 ],
               ),
 
+            ),
           ),
-      ),
-    )
+        )
     );
   }
 
@@ -95,7 +103,7 @@ class _AddModule extends State
 
     final Database db = await database;
     await db.insert('module', module.toMap(),
-    conflictAlgorithm: ConflictAlgorithm.replace);
+        conflictAlgorithm: ConflictAlgorithm.replace);
     print("End of insertData");
 
   }
@@ -115,16 +123,16 @@ class _AddModule extends State
     return TextFormField(
 
       decoration: InputDecoration(
-        labelText: "Module Code"
+          labelText: "Module Code"
       ),
       // ignore: missing_return
       validator: (String value)
       {
         if(value.isEmpty)
-          {
-            return "Module code is required";
-          }
-       /* else{
+        {
+          return "Module code is required";
+        }
+        /* else{
           return null;
         }*/
       },
@@ -166,27 +174,27 @@ class _AddModule extends State
       //value: grade,
       hint: Text("Grade"),
 
-        items: <String>['A+','A','A-','B+','B','B-','C+','C','C-','D+','D','E']
-            .map<DropdownMenuItem<String>>((String value)
-        {
-          return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value));
-        }).toList(),
+      items: <String>['A+','A','A-','B+','B','B-','C+','C','C-','D+','D','E']
+          .map<DropdownMenuItem<String>>((String value)
+      {
+        return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value));
+      }).toList(),
 
-        onChanged: (String newGrade)
-        {
-          setState(() {
-            grade = newGrade;
-          });
-          print(grade);
-        },
-        validator: (grade )
+      onChanged: (String newGrade)
+      {
+        setState(() {
+          grade = newGrade;
+        });
+        print(grade);
+      },
+      validator: (grade )
       {
         if(grade ==null)
-          {
-            return "Please select a grade";
-          }
+        {
+          return "Please select a grade";
+        }
         return null;
       },
 
@@ -223,16 +231,16 @@ class _AddModule extends State
   {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: "Year of the module"
+          labelText: "Year of the module"
       ),
       keyboardType: TextInputType.number,
       validator: (String value)
       {
         int tempYaer = int.tryParse(value);
         if(tempYaer == null || tempYaer < 1)
-          {
-            return "Please insert a valid year";
-          }
+        {
+          return "Please insert a valid year";
+        }
         return null;
       },
       onSaved: (String value)
@@ -271,10 +279,10 @@ class _AddModule extends State
   {
     return DropdownButton(
         items: <String>['A+','A','A-','B+','B']
-        .map<DropdownMenuItem<String>>((String value)
+            .map<DropdownMenuItem<String>>((String value)
         {
           return DropdownMenuItem<String>(
-            value: value,
+              value: value,
               child: Text(value));
         }).toList(),
         onChanged: (String newGrade)

@@ -92,6 +92,18 @@ class DBHelper
     return res;
   }
 
+  getModulesForSemesterOfYear(int year, int semester) async
+  {
+    print("in db helper getModulesForSemesterOfYear");
+    final Database db = _db;
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+        'SELECT * FROM module WHERE year=? AND semester =?',[year,semester]);
+
+    return List.generate(maps.length, (i) {
+      return Module(maps[i]['moduleCode'], maps[i]['moduleName'], maps[i]['grade'], maps[i]['credits'], maps[i]['year'], maps[i]['semester']);
+    });
+  }
+
 }
 
 

@@ -1,49 +1,70 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gpa_calc/AddModule.dart';
+import 'package:gpa_calc/AddModuleForYearSem.dart';
 import 'package:gpa_calc/main.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:gpa_calc/Model/Module.dart';
 import 'package:gpa_calc/db_helper.dart';
 
+import 'ScreenArguments.dart';
 
+
+// ignore: must_be_immutable
 class SemesterView extends StatefulWidget
 {
+  final year, semester;
+
+  const SemesterView({Key key, this.year, this.semester}) : super(key: key);
+  //const SemesterView({Key key, this.year, this.semester}) : super(key: key);
+
+
   @override
   State<StatefulWidget> createState() {
-    return _SemesterView();
+    return _SemesterView(year,semester);
   }
 
 }
 
 class _SemesterView extends State
 {
-  Future<List<Module>> allRecords = new DBHelper().getAllRecordsForModule();
+
+  Map data= {};
+
+  final year, semester;
+  //Future<List<Module>> allRecords = new DBHelper().getAllRecordsForModule();
+
+  _SemesterView(this.year, this.semester);
   //Future<List<Module>> moduleListFuture = db.getAllRecords();
 
   //List<Module> moduleList = new List<Module>();
   Widget build(BuildContext context)
   {
-    /*createModuleList();
-    if(moduleList.isEmpty)
-      {
-        print("Module list is empty");
-        for(var i = 0; i < moduleList.length;i++)
-        {
+    data = ModalRoute.of(context).settings.arguments;
+    /*year = data['year'];
+    semester = data['semester'];*/
 
-        }
-      }*/
+    /*final ScreenArguments args = ModalRoute.of(context).settings.arguments;
+    year = int.tryParse(args.year);
+    semester = int.tryParse(args.semester);*/
     return Scaffold(
-      appBar: AppBar(title: Text("Semster module list"),),
+      appBar: AppBar(title: Text("Year $year semester $semester module list"),),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: (){
+          //Navigator.of(context).pushNamed('/addNewModule',arguments: "Data passed from home");
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) =>AddModuleForYearSem(year, semester)));
+        },
+      ),
 
       body: FutureBuilder<List>(
         //future: allRecords,
-        future: getAllModules(),
+        future: getModulesForSemester(),
         initialData: List(),
         builder: (context, snapshot)
         {
-          if(snapshot.hasData)
-            {
+          if(snapshot.hasData) {
 
               print("snapshot has data");
               return ListView.builder(
@@ -76,10 +97,18 @@ class _SemesterView extends State
     );
   }
 
-  Future<List<Module>> getAllModules() async
+  /*Future<List<Module>> getAllModules() async
   {
     DBHelper dbHelper = new DBHelper();
     return dbHelper.getAllRecordsForModule();
+  }*/
+
+  //returns a future list for the year and semester
+  Future<List<Module>> getModulesForSemester() async
+  {
+    DBHelper dbHelper = new DBHelper();
+    return dbHelper.getAllRecordsForModule();
+    //return dbHelper.getModulesForSemesterOfYear(year, semester);
   }
 
 
@@ -140,6 +169,7 @@ ListTile _moduleTile2(Module module)
     title: Text(module.moduleCode),
     subtitle: Text(module.moduleName + module.grade  , style: TextStyle(fontSize: 12),),
 
+    onTap: null,
     isThreeLine: true,
     trailing: IconButton(icon: Icon(Icons.edit),onPressed: null,),
   );

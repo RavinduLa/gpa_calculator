@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gpa_calc/Semester.dart';
+import 'package:gpa_calc/ScreenArguments.dart';
 import 'package:gpa_calc/main.dart';
 
 class YearOnePage extends StatefulWidget
@@ -79,8 +81,8 @@ class _YearOnePage extends State
 
             Column(
               children: [
-                Semester(1),
-                Semester(2),
+                Semester(1,1),  //first year then semester
+                Semester(1,2),
                 RaisedButton(
                     onPressed: ()
                   {
@@ -102,28 +104,34 @@ class _YearOnePage extends State
 
 class Semester extends StatefulWidget
 {
-  int semsterNumber;
+  int semesterNumber ,year;
+  //final String semesterData;
 
-  Semester(int sem)
+
+
+  Semester(int year, int sem)
   {
-    this.semsterNumber = sem;
+    this.semesterNumber = sem;
+    this.year = year;
   }
   @override
   State<StatefulWidget> createState() {
-    return _Semester(semsterNumber);
+    return _Semester(semesterNumber,year);
   }
 
 }
 
 class _Semester extends State
 {
-  int semesterNumber;
-  _Semester(int sem)
+  int semesterNumber=1, year=1;
+  _Semester(int sem, int year)
   {
     this.semesterNumber = sem;
+    this.year = year;
   }
   @override
   Widget build(BuildContext context) {
+    print("Year: "+year.toString()+" semester: "+ semesterNumber.toString());
     return Center(
       child: Container(
         padding: EdgeInsets.all(12.0),
@@ -163,7 +171,11 @@ class _Semester extends State
                 RaisedButton(
                     padding: EdgeInsets.all(10.0),
                     color: Colors.cyan,
-                    onPressed: () => Navigator.of(context).pushNamed('/semesterView',arguments: "Data passed from home"),
+                    onPressed: () {
+                      Navigator.push(context
+                          , MaterialPageRoute(
+                              builder: (context) => SemesterView(year: year,semester: semesterNumber,)   ));
+                    },
 
                   child: Container(
                     //decoration: const BoxDecoration(color: Colors.red),
@@ -267,8 +279,8 @@ class _YearTwoPage extends State
 
               Column(
                 children: [
-                  Semester(1),
-                  Semester(2)
+                  Semester(2,1),
+                  Semester(2,2)
                 ],
               ),
 
@@ -356,8 +368,8 @@ class _YearThreePage extends State
 
               Column(
                 children: [
-                  Semester(1),
-                  Semester(2)
+                  Semester(3,1),
+                  Semester(3,2)
                 ],
               ),
 
@@ -445,8 +457,8 @@ class _YearFourPage extends State
 
               Column(
                 children: [
-                  Semester(1),
-                  Semester(2)
+                  Semester(4,1),
+                  Semester(4,2)
                 ],
               ),
 
